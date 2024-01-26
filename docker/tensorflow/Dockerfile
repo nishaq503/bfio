@@ -5,6 +5,7 @@ FROM tensorflow/tensorflow:2.13.0-gpu
 RUN apt update && \
     apt install software-properties-common -y && \
     apt install maven openjdk-8-jre -y && \
+    apt install qemu-user-static -y && \
     apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
@@ -19,15 +20,15 @@ ENV EXEC_DIR="/opt/executables"
 ENV DATA_DIR="/data"
 
 RUN mkdir ${EXEC_DIR} && \
-    mkdir ${DATA_DIR}}
+    mkdir ${DATA_DIR}
 
-RUN pip3 install --upgrade pip --no-cache-dir
+RUN pip3 install --upgrade pip --no-cache-dir && \
+    rm -rf /bfio_src
 
 # Copy the source
 COPY . /bfio_src
 
 # Install
-RUN pip3 install /bfio_src --no-cache-dir && \
-    rm -rf /bfio_src
+RUN pip3 install /bfio_src --no-cache-dir
 
 RUN python3 -c 'import bfio; bfio.start()'

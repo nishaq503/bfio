@@ -11,7 +11,7 @@ ENV EXEC_DIR="/opt/executables"
 ENV DATA_DIR="/data"
 
 RUN mkdir ${EXEC_DIR} && \
-    mkdir ${DATA_DIR}} && \
+    mkdir ${DATA_DIR} && \
     mkdir /bfio_src
 
 # Install Python
@@ -20,6 +20,7 @@ RUN apt update && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt install python3.9 python3.9-distutils curl maven openjdk-8-jre -y && \
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    apt install gcc python3-dev -y && \
     python3.9 get-pip.py && \
     apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*

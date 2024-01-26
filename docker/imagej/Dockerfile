@@ -11,6 +11,7 @@ RUN apt update && \
     apt install python3.9 python3.9-distutils curl -y && \
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.9 get-pip.py && \
+    apt install qemu-user-static -y && \
     apt autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
@@ -36,7 +37,7 @@ ENV EXEC_DIR="/opt/executables"
 ENV DATA_DIR="/data"
 
 RUN mkdir ${EXEC_DIR} && \
-    mkdir ${DATA_DIR}}
+    mkdir ${DATA_DIR}
 
 RUN python3 -c 'import imagej; ij = imagej.init(); print(ij.getVersion())'
 
